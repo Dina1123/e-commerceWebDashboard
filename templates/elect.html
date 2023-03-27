@@ -1,0 +1,98 @@
+<ul class="nav nav-tabs">
+    <li><a href="#" ng-click="$event.preventDefault();x=false">Devices</a></li>
+    <li><a href="#" ng-click="$event.preventDefault();x=true;getOrders()">Orders</a></li>
+</ul>
+<div ng-if="!x">
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Delete</th>
+            <th>Modify</th>
+        </tr>
+        <tr ng-repeat="device in devices">
+            <th>{{$index+1}}</th>
+            <th>{{device.d_name}}</th>
+            <th>{{device.type}}</th>
+            <th>{{device.qty}}</th>
+            <th>{{device.price}}</th>
+            <th><img src="http://localhost/MY PROJECT/myApp1/{{device.img}}" style="width:128px;height:128px"> </th>
+            <th><button class="btn btn-danger" ng-click="deleteDevice(device.id,$index)">Delete</button> </th>
+            <th><button class="btn btn-success" ng-click="preModifyDevice(device)">Modify</button> </th>
+        </tr>
+    </table>
+    <form ng-submit="addevice()">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" ng-model="deviceData.d_name" required>
+        </div>
+        <div class="form-group">
+            <label>Type</label>
+            <select class="form-control" ng-model="deviceData.type" required>
+                <option value="phones">phones</option>
+                <option value="Laptops">Laptops</option>
+                <option value="Tablates">Tablets</option>
+                <option value="other">Others</option>
+                
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" class="form-control" ng-model="deviceData.qty" required>
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" class="form-control" ng-model="deviceData.price" required>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" ng-model="deviceData.decr" required></textarea>
+        </div>
+
+
+        <div class="form-group">
+            <label>Photo</label>
+            <input mds-file type="file" file="deviceData.img" base64="y" required>
+            <img src="{{y}}" style="width:400px;height: 250px;display: block;margin: auto">
+        </div>
+        <button class="btn btn-success">ADD</button>
+    </form>
+</div>
+<div ng-if="x">
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>Number</th>
+           
+            <th>Address</th>
+            <th>Telephone</th>
+            <th>Devices</th>
+            <th>Order Time</th>
+            <th>Ready Time</th>
+        </tr>
+        <tr ng-repeat="order in orders">
+            <td>{{$index+1}}</td>
+           
+            <td>{{order.addr}}</td>
+            <td>{{order.tel}}</td>
+            <td>
+                <table class="table">
+                    <tr>
+                        <td>{{order.dd_name}}</td>
+                        <td>{{order.price|currency}}</td>
+                        <td>{{order.c_qty}}</td>
+                    </tr>
+                </table>
+            </td>
+            <td>{{order.time_order}}</td>
+            <td>
+                <span ng-show="order.time_ready">{{order.time_ready}}</span>
+                <button ng-show="!order.time_ready" class="btn btn-success">Ready</button>
+            </td>
+        </tr>
+    </table>
+ </div>
